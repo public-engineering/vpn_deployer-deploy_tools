@@ -1,6 +1,8 @@
 VPN Deployer
 ===
 
+**Note: I no longer endorse the use of DigitalOcean. This project is for archive purposes only; I recommend using the [user-data script](https://raw.githubusercontent.com/jmarhee/dockvpn/master/provision.sh) with any Ubuntu or Debian machine on a provider, more details can be found [here](https://github.com/jmarhee/vpn_deployer#running-your-own-instance-of-the-deployer).**
+
 Deploys a Docker-based VPN server one-click solution on DigitalOcean. The package this deploys is <a href="https://github.com/jmarhee/dockvpn">jmarhee/dockvpn</a>.
 
 **Visit my Deployer instance: <a href="https://vpn-deploy.arcology.io/">https://vpn-deploy.arcology.io/<a/>**
