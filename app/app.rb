@@ -34,7 +34,7 @@ class DigitalOceanExample < Sinatra::Base
     redirect '/auth/digitalocean'
   end
 
-  get '/callback' do
+  get '/auth/:provider/callback' do
     hostname = "vpn-" + (0...8).map { (65 + rand(26)).chr }.join
     user_data = HTTParty.get("https://raw.githubusercontent.com/jmarhee/dockvpn/master/provision.sh").body.to_s
 

@@ -8,7 +8,7 @@ module "vpn-deployers" {
   region               = var.region
   count                = var.pool_size
   host_record          = var.host_record
-  cloudflare_zone_id   = var.cloudflare_zone_id
+  digitalocean_domain  = var.digitalocean_domain
   client_id            = var.client_id
   client_secret        = var.client_secret
 }

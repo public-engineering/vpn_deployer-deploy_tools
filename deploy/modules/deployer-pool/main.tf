@@ -5,8 +5,9 @@ variable "pushover_token" {}
 variable "pushover_user" {}
 variable "client_id" {}
 variable "client_secret" {}
-variable "cloudflare_zone_id" {}
+variable "digitalocean_domain" {}
 variable "host_record" {}
+variable "pool_size" {}
 
 data "template_file" "deployer" {
   template = "${file("${path.module}/deployer.tpl")}"
@@ -19,15 +20,9 @@ data "template_file" "deployer" {
   }
 }
 
-resource "random_string" "hostname" {
-  length  = 8
-  special = false
-  lower   = true
-  upper   = false
-}
-
 resource "digitalocean_droplet" "deployer" {
-  name               = "deployer-node-${random_string.hostname.result}"
+  name               = format("deployer-node-%02d", count.index)
+  count              = var.pool_size
   image              = "ubuntu-18-04-x64"
   size               = var.droplet_size
   region             = var.region
@@ -37,10 +32,38 @@ resource "digitalocean_droplet" "deployer" {
   user_data          = data.template_file.deployer.rendered
 }
 
+resource "digitalocean_certificate" "cert" {
+  name    = "vpn-deployer"
+  type    = "lets_encrypt"
+  domains = ["${var.host_record}.${var.digitalocean_domain}"]
+}
+
+resource "digitalocean_loadbalancer" "public" {
+  name   = "vpn-deployer"
+  region = var.region
+
+  forwarding_rule {
+    entry_port     = 443
+    entry_protocol = "https"
+
+    target_port     = 8080
+    target_protocol = "http"
+
+    certificate_id = digitalocean_certificate.cert.id
+  }
+
+  healthcheck {
+    port     = 8080
+    protocol = "tcp"
+  }
+
+  droplet_ids = digitalocean_droplet.deployer.*.id
+}
+
 resource "cloudflare_record" "dial" {
   zone_id = var.cloudflare_zone_id
   name    = var.host_record
-  value   = digitalocean_droplet.deployer.ipv4_address
+  value   = digitalocean_loadbalancer.public.ip
   type    = "A"
   ttl     = 1
   proxied = true
