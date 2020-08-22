@@ -1,7 +1,7 @@
 VPN Deployer
 ===
 
-**Note: I no longer endorse the use of DigitalOcean. This project is for archive purposes only; I recommend using the [user-data script](https://raw.githubusercontent.com/jmarhee/dockvpn/master/provision.sh) with any Ubuntu or Debian machine on a provider, more details can be found [here](https://github.com/jmarhee/vpn_deployer#running-your-own-instance-of-the-deployer).**
+**Note: If you are not a user of DigitalOcean, but wish to deploy the server, I recommend using the [user-data script](https://raw.githubusercontent.com/jmarhee/dockvpn/master/provision.sh) with any Ubuntu or Debian machine on a provider, more details can be found [here](https://github.com/jmarhee/vpn_deployer#running-your-own-instance-of-the-deployer).**
 
 Deploys a Docker-based VPN server one-click solution on DigitalOcean. The package this deploys is <a href="https://github.com/jmarhee/dockvpn">jmarhee/dockvpn</a>.
 
@@ -16,7 +16,21 @@ Running your own instance of the deployer
 
 *Note* This repo _only_ runs the deployer. **To run the VPN server itself, check out <a href="https://github.com/jmarhee/dockvpn">jmarhee/dockvpn</a>**. 
 
-Copy `environment.rb.example` to `environment.rb`, populate with your DigitalOcean Application key and secret, and build:
+### Using Terraform
+
+To deploy to DigitalOcean behind a Load Balancer:
+
+```bash
+cd deploy
+```
+Then populate `terraform.tfvars`, and apply:
+```
+terraform apply
+```
+
+### Manually build server container
+
+Copy `environment.rb.example` to `environment.rb`, or using environmental variables with Docker below, populate with your DigitalOcean Application key and secret, and build:
 
 ```
 docker build -t vpn_deployer-app .
@@ -25,8 +39,10 @@ docker build -t vpn_deployer-app .
 and run:
 
 ```
-docker run -d --restart=always -p 80:4567 --name vpn-deployer-app vpn_deployer-app
+docker run -d --restart always --name vpn_deployer -p 8080:4567 -e pushover_token=${pushover_token} -e pushover_user=${pushover_user} -e client_id="${client_id}" -e client_secret="${client_secret}" vpn_deployer
 ```
+
+Once the image is available
 
 Running standalone VPN
 ---

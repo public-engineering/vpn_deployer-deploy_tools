@@ -1,3 +1,7 @@
-environment.rb
-deploy.sh
-Gemfile.lock
+app/environment.rb
+app/deploy.sh
+app/Gemfile.lock
+deploy/terraform.tfvars
+deploy/terraform.tfstate
+deploy/.terraform
+deploy/terraform.tfstate.backup

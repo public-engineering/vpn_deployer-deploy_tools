@@ -8,10 +8,25 @@ require './environment'
 require 'thin'
 require 'rack/ssl'
 require 'faker'
+require "net/https"
 
 class DigitalOceanExample < Sinatra::Base
   use Rack::Session::Cookie
   set :environment, :production
+
+  def notify (message)
+    url = URI.parse("https://api.pushover.net/1/messages.json")
+    req = Net::HTTP::Post.new(url.path)
+    req.set_form_data({
+      :token => "#{ENV['PUSHOVER_TOKEN']}",
+      :user => "#{ENV['PUSHOVER_USER']}",
+      :message => "#{message}",
+    })
+    res = Net::HTTP.new(url.host, url.port)
+    res.use_ssl = true
+    res.verify_mode = OpenSSL::SSL::VERIFY_PEER
+    res.start {|http| http.request(req) }
+  end
 
   get '/' do
     erb :index
@@ -30,16 +45,16 @@ class DigitalOceanExample < Sinatra::Base
     regions = ["sfo2","nyc3","ams3","sgp1"]
     region = regions.sample
     response = HTTParty.post("https://api.digitalocean.com/v2/droplets", :headers => { 'Content-Type' => 'application/json', 'Authorization' => "Bearer #{token}" }, :body => {
-        :name => "#{hostname}.vpn.arcology.io",
+        :name => "#{hostname}.vpn.public.engineering",
         :region => "#{region}",
-        :size => '512mb',
+        :size => '1gb',
         :image => 'docker',
         :ssh_keys => [],
         :backups => false,
         :ipv6 => true,
         :user_data => "#{user_data}",
         :private_networking => "null",
-        :tags => ['openvpn-arcology']
+        :tags => ['openvpn-public-engineering']
       }.to_json)
     puts response.body    
     did = response.body
@@ -52,6 +67,7 @@ class DigitalOceanExample < Sinatra::Base
 
     message = "Droplet (#{droplet_id}: #{ip_address}) created in *#{region}*."
     puts message
+    notify(message)
 
     erb :confirmation, :locals => {:droplet_id => droplet_id, :ip_address => ip_address }
   end
