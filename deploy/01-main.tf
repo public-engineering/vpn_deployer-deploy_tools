@@ -6,7 +6,7 @@ module "vpn-deployers" {
   droplet_size         = var.droplet_size
   ssh_key_fingerprints = [digitalocean_ssh_key.default.fingerprint]
   region               = var.region
-  count                = var.pool_size
+  pool_size            = var.pool_size
   host_record          = var.host_record
   digitalocean_domain  = var.digitalocean_domain
   client_id            = var.client_id
