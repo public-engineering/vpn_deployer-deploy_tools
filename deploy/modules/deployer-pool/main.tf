@@ -39,7 +39,7 @@ resource "digitalocean_certificate" "cert" {
 }
 
 resource "digitalocean_loadbalancer" "public" {
-  name   = "vpn-deployer"
+  name   = "${var.host_record}.${var.digitalocean_domain}"
   region = var.region
 
   forwarding_rule {
@@ -60,11 +60,7 @@ resource "digitalocean_loadbalancer" "public" {
   droplet_ids = digitalocean_droplet.deployer.*.id
 }
 
-resource "cloudflare_record" "dial" {
-  zone_id = var.cloudflare_zone_id
-  name    = var.host_record
-  value   = digitalocean_loadbalancer.public.ip
-  type    = "A"
-  ttl     = 1
-  proxied = true
+resource "digitalocean_domain" "default" {
+  name       = "${var.host_record}.${var.digitalocean_domain}"
+  ip_address = digitalocean_loadbalancer.public.ip
 }
