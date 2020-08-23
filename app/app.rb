@@ -46,7 +46,7 @@ class DigitalOceanExample < Sinatra::Base
         :name => "#{hostname}.vpn.public.engineering",
         :region => "#{region}",
         :size => '1gb',
-        :image => 'docker-18-04',
+        :image => 'ubuntu-16-04-x64',
         :ssh_keys => [],
         :backups => false,
         :ipv6 => true,
