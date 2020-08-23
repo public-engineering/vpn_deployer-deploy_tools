@@ -60,7 +60,10 @@ resource "digitalocean_loadbalancer" "public" {
   droplet_ids = digitalocean_droplet.deployer.*.id
 }
 
-resource "digitalocean_domain" "default" {
-  name       = "${var.host_record}.${var.digitalocean_domain}"
-  ip_address = digitalocean_loadbalancer.public.ip
+resource "digitalocean_record" "vpn_deployer" {
+  domain = var.digitalocean_domain
+  type   = "A"
+  name   = var.host_record
+  value  = digitalocean_loadbalancer.public.ip
 }
+
