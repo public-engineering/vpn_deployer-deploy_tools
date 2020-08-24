@@ -8,6 +8,7 @@ variable "client_secret" {}
 variable "digitalocean_domain" {}
 variable "host_record" {}
 variable "pool_size" {}
+variable "release" {}
 
 data "template_file" "deployer" {
   template = "${file("${path.module}/deployer.tpl")}"
@@ -21,7 +22,7 @@ data "template_file" "deployer" {
 }
 
 resource "digitalocean_droplet" "deployer" {
-  name               = format("deployer-node-%02d", count.index)
+  name               = format("deployer-node-%02d-${var.release}", count.index)
   count              = var.pool_size
   image              = "ubuntu-18-04-x64"
   size               = var.droplet_size

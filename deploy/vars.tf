@@ -26,5 +26,6 @@ variable "client_id" {}
 variable "client_secret" {}
 variable "pushover_user" {}
 variable "pushover_token" {}
+variable "release" {}
 
 
