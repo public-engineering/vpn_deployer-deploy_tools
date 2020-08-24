@@ -18,6 +18,7 @@ data "template_file" "deployer" {
     client_secret  = var.client_secret
     pushover_token = var.pushover_token
     pushover_user  = var.pushover_user
+    release        = var.release
   }
 }
 
