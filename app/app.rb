@@ -12,12 +12,12 @@ class DigitalOceanExample < Sinatra::Base
   use Rack::Session::Cookie
   set :environment, :production
 
-  def notify (message)
+  def notify(user, token, message)
     url = URI.parse("https://api.pushover.net/1/messages.json")
     req = Net::HTTP::Post.new(url.path)
     req.set_form_data({
-      :token => "#{ENV['PUSHOVER_TOKEN']}",
-      :user => "#{ENV['PUSHOVER_USER']}",
+      :token => "#{token}",
+      :user => "#{user}",
       :message => "#{message}",
     })
     res = Net::HTTP.new(url.host, url.port)
@@ -65,7 +65,7 @@ class DigitalOceanExample < Sinatra::Base
 
     message = "Droplet (#{droplet_id}: #{ip_address}) created in *#{region}*."
     puts message
-    notify(message)
+    notify(ENV['PUSHOVER_USER'], ENV['PUSHOVER_TOKEN'], message)
 
     erb :confirmation, :locals => {:droplet_id => droplet_id, :ip_address => ip_address }
   end
