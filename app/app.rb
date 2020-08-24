@@ -63,7 +63,7 @@ class DigitalOceanExample < Sinatra::Base
 
     puts ip_address
 
-    message = "Droplet (#{droplet_id}: #{ip_address}) created in *#{region}*."
+    message = "Droplet (#{droplet_id}: #{ip_address}) created in *#{region}*. "
     puts message
     notify(ENV['PUSHOVER_USER'], ENV['PUSHOVER_TOKEN'], message)
 
