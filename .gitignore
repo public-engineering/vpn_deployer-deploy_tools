@@ -5,3 +5,4 @@ deploy/terraform.tfvars
 deploy/terraform.tfstate
 deploy/.terraform
 deploy/terraform.tfstate.backup
+test_deploy.sh
