@@ -1,0 +1,3 @@
+[submodule "app"]
+	path = app
+	url = ssh://git@git-ssh-central.openfunction.co:2222/jmarhee/vpn_deployer_heroku.git
