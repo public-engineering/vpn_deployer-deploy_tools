@@ -1,6 +1,13 @@
 VPN Deployer
 ===
 
+## Deprecation Notice
+
+This repo is only for deployment scripts. The application can now be found in [jmarhee/vpn_deployer_heroku](https://git-central.openfunction.co/jmarhee/vpn_deployer_heroku).
+
+Overview
+---
+
 **Note: If you are not a user of DigitalOcean, but wish to deploy the server, I recommend using the [user-data script](https://raw.githubusercontent.com/jmarhee/dockvpn/master/provision.sh) with any Ubuntu or Debian machine on a provider, more details can be found [here](https://github.com/jmarhee/vpn_deployer#running-your-own-instance-of-the-deployer).**
 
 Deploys a Docker-based VPN server one-click solution on DigitalOcean. The package this deploys is <a href="https://github.com/jmarhee/dockvpn">jmarhee/dockvpn</a>.
