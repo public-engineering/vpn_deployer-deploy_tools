@@ -1,18 +1,17 @@
-VPN Deployer
+VPN Deployer (vpn-deploy.public.engineering)
 ===
 
-## Deprecation Notice
+<img src="https://img.shields.io/liberapay/patrons/~1532295.svg?logo=liberapay"> <img src="https://img.shields.io/liberapay/goal/~1532295.svg?logo=liberapay"> 
 
-This repo is only for deployment scripts. The application can now be found in [jmarhee/vpn_deployer_heroku](https://git-central.openfunction.co/jmarhee/vpn_deployer_heroku).
+Deploy a [Docker-based OpenVPN Server](https://github.com/jmarhee/dockvpn) and one-time UI for retrieving the VPN configuration. 
 
-Overview
----
+This repo is primarily for deployment scripts. The application, itself, can now be found in [jmarhee/vpn_deployer_heroku](https://git-central.openfunction.co/jmarhee/vpn_deployer_heroku).
 
-**Note: If you are not a user of DigitalOcean, but wish to deploy the server, I recommend using the [user-data script](https://raw.githubusercontent.com/jmarhee/dockvpn/master/provision.sh) with any Ubuntu or Debian machine on a provider, more details can be found [here](https://github.com/jmarhee/vpn_deployer#running-your-own-instance-of-the-deployer).**
+**Note: If you are not a user of DigitalOcean (the platform used in the deployment Terraform included), but wish to deploy the server, I recommend using the [user-data script](https://raw.githubusercontent.com/jmarhee/dockvpn/master/provision.sh) with any Ubuntu or Debian machine on a provider, more details can be found [here](https://github.com/jmarhee/vpn_deployer#running-your-own-instance-of-the-deployer).**
 
 Deploys a Docker-based VPN server one-click solution on DigitalOcean. The package this deploys is <a href="https://github.com/jmarhee/dockvpn">jmarhee/dockvpn</a>.
 
-**Visit my Deployer instance: <a href="https://vpn-deploy.arcology.io/">https://vpn-deploy.arcology.io/<a/>**
+**Visit my Deployer instance: <a href="https://vpn-deploy.public.engineering/">https://vpn-deploy.public.engineering/<a/>**
 
 **You can read more about this project <a href="https://medium.com/@jmarhee/automating-deploying-a-personal-vpn-server-on-digitalocean-f585aca396cf#.oo5tuvo9b">on Medium</a>.**
 
